@@ -12,7 +12,8 @@ var outer = function(){
 // Invoke outer saving the return value into another variable called 'inner'.
 
 // Code Here
-
+var inner = outer();
+inner();
 
 //Once you do that, invoke inner.
 
@@ -37,7 +38,8 @@ var callFriend = function(){
 
   //Code Here
 
-
+var makeCall = callFriend();
+// makeCall('435-215')
 
 
 
@@ -52,13 +54,19 @@ var callFriend = function(){
 */
 
 //Code Here
-
+function makeCounter(){
+  var count = 0;
+  return function(){
+    count++;
+    return count;
+  }
+}
 //Uncomment this once you make your function
-//   var count = makeCounter();
-//   count(); // 1
-//   count(); // 2
-//   count(); // 3
-//   count(); // 4
+  var count = makeCounter();
+  count(); // 1
+  count(); // 2
+  count(); // 3
+  count(); // 4
 
 
 
@@ -74,16 +82,21 @@ var callFriend = function(){
 function counterFactory(value) {
 
   // Code here.
-
+  function inc(){
+    return ++value;
+  }
+  function dec(){
+    return --value;
+  }
 
   return {
+    inc: inc,
+    dec: dec
   }
 }
 
 
 counter = counterFactory(10);
-
-
 
 
 //////////////////PROBLEM 5////////////////////
@@ -96,11 +109,13 @@ counter = counterFactory(10);
     var welcomeText = 'You\'re doing awesome, keep it up ';
 
     // code message function here.
-
+    function message(){
+      return 'You\'re doing awesome, keep it up ' + firstname + " " + lastname + ".";
+    }
 
     //Uncommment this to return the value of your invoked message function
 
-    //return message()
+    return message()
   }
 
   motivation('Billy', 'Bob'); // 'Your doing awesome keep it up Billy Bob
@@ -126,13 +141,16 @@ counter = counterFactory(10);
     // Anything that is being returned is made public and can be invoked from outside our lexical scope
 
     return {
+      publicMethod: function(){
+        return privateMethod();
+      }
       // Code here.
     };
 
   })();
 
 //Uncomment this after you create your public method
-//   module.publicMethod();
+module.publicMethod();
 
 
 
@@ -142,14 +160,20 @@ counter = counterFactory(10);
 
 
 function timeOutCounter() {
+  // for (var i = 0; i <= 5; i++) {
+  //   setTimeout(function() {
+  //     console.log(i);
+  //   }, i * 1000)
+  // }
+
   for (var i = 0; i <= 5; i++) {
-    setTimeout(function() {
-      console.log(i);
-    }, i * 1000)
+    setTimeout(newScope(i), i * 1000)
   }
 
   function newScope(i) {
-    console.log(i)
+    return function(){
+      console.log(i)
+    }
   }
 }
 timeOutCounter();
@@ -163,6 +187,11 @@ timeOutCounter();
 
 var funcArray = [];
 
+function getIndex(){
+  return function(){
+    
+  }
+}
 /*
   Make the following code work
 
